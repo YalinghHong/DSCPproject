@@ -13,4 +13,13 @@ run git clone https://github.com/YalinghHong/DSCPproject.git [your local direcro
 https://lanxizhang.shinyapps.io/Project3/ You can view the app directly by clicking on the link. 
 
 ## projectCHTC.tar
+[projectCHTC.tar](projectCHTC.tar) contains all codes for statistical computations on CHTC.
+
+run tar -xvf projectCHTC.tar to extract all files
+
+run chmod +x submit.sh
+
+run ./submit.sh
+
+For detailed information, please refer to the README file contained in this tar.
 
