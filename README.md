@@ -1,6 +1,6 @@
 # DSCP Project
 
-run git clone https://github.com/YalinghHong/DSCPproject.git <your local direcroty> to copy this repository to your local machine
+run git clone https://github.com/YalinghHong/DSCPproject.git [your local direcroty] to copy this repository to your local machine
 
 ## Data
 - [summary.csv.zip](summary.csv.zip) This data contains processed numbers of more than 15,000 weather stations, geographic information, and annual average precipitation and temperature.
