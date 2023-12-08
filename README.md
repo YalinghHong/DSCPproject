@@ -1,5 +1,7 @@
 # DSCP Project
 
+## Data
+- [summary.csv.zip](summary.csv.zip) This data contains processed numbers of more than 15,000 weather stations, geographic information, and annual average precipitation and temperature.
 ## Code
 - [Datacleaning for shiny.Rmd](Datacleaning%20for%20shiny.Rmd) This code calculates the average annual precipitation and temperature for more than 15,000 weather station, and stores in a csv after processing.
 
