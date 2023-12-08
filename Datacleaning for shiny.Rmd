@@ -1,0 +1,110 @@
+---
+title: "Untitled"
+author: "Lanxi Zhang"
+date: "12/2/2023"
+output: html_document
+---
+
+
+```{r}
+library(dplyr)
+library(readr)
+
+process_and_save_file <- function(file_path, output_directory) {
+  data <- read_csv(file_path)
+  data$DATE <- as.Date(data$DATE, format="%Y/%m/%d")
+
+  data_filtered <- data %>%
+    filter(DATE >= as.Date("2000-01-01") & DATE <= as.Date("2023-12-31"))
+
+  output_file_path <- file.path(output_directory, basename(file_path))
+  write_csv(data_filtered, output_file_path)
+}
+
+input_directory <- "/Users/zhanglanxi/Desktop/605/Project3/data"
+output_directory <- "/Users/zhanglanxi/Desktop/605/Project3/data1"
+
+if (!dir.exists(output_directory)) {
+  dir.create(output_directory)
+}
+
+file_paths <- list.files(path = input_directory, full.names = TRUE)
+
+lapply(file_paths, process_and_save_file, output_directory)
+
+```
+
+
+
+
+
+```{r}
+data <- read_csv("/Users/zhanglanxi/Desktop/605/Project3/data/AE000041196.csv")
+data$DATE <- as.Date(data$DATE, format="%Y/%m/%d")
+data
+
+data_filtered <- data %>%
+    filter(DATE >= as.Date("2000-01-01") & DATE <= as.Date("2023-12-31"))
+
+data_filtered
+```
+
+```{r}
+library(dplyr)
+library(readr)
+
+process_file <- function(file_path, index) {
+  cat("calculating", index, ":", basename(file_path), "\n")
+
+  data <- try(read_csv(file_path), silent = TRUE)
+
+  if (inherits(data, "try-error")) return(NULL)
+
+  if (!"PRCP" %in% names(data)) data$PRCP <- NA
+  if (!"TAVG" %in% names(data)) data$TAVG <- NA
+
+  data$DATE <- as.Date(data$DATE, format = "%Y/%m/%d")
+  data$YEAR <- format(data$DATE, "%Y")
+
+  data_summary <- data %>%
+    group_by(STATION, YEAR, LATITUDE, LONGITUDE, ELEVATION, NAME) %>%
+    summarize(AVG_PRCP = mean(PRCP, na.rm = TRUE), AVG_TAVG = mean(TAVG, na.rm = TRUE)) %>%
+    ungroup()
+
+  return(data_summary)
+}
+
+input_directory <- "/Users/zhanglanxi/Desktop/605/Project3/data1"
+output_file <- "/Users/zhanglanxi/Desktop/605/Project3/summary.csv"
+
+file_paths <- list.files(path = input_directory, full.names = TRUE)
+
+all_summaries <- mapply(process_file, file_paths, seq_along(file_paths), SIMPLIFY = FALSE)
+
+final_data <- bind_rows(all_summaries)
+
+#write_csv(final_data, output_file)
+
+```
+
+```{r}
+sum <- read.csv("summary.csv")
+sum
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
